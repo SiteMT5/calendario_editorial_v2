@@ -3316,7 +3316,32 @@ window.addEventListener('load', () => {
     }
   }
 });
-  
+
+<button onclick="removeCurrentSlide(${i})">
+🗑 Remover
+</button>
+
+ function removeCurrentSlide(postIndex){
+
+  if(!previewSlides[postIndex]) return;
+
+  const current = previewCurrentSlide[postIndex] || 0;
+
+  previewSlides[postIndex].splice(current, 1);
+
+  if(current >= previewSlides[postIndex].length){
+    previewCurrentSlide[postIndex] =
+      Math.max(0, previewSlides[postIndex].length - 1);
+  }
+
+  localStorage.setItem(
+    'previewSlides_' + postIndex,
+    JSON.stringify(previewSlides[postIndex])
+  );
+
+  renderPreview(postIndex);
+}
+ 
 buildSidebar();
 buildCards();
 updateStatusCounts();
